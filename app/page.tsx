@@ -1,14 +1,26 @@
 import Link from "next/link";
 import { BountyCard } from "@/components/BountyCard";
 import { SeedButton } from "@/components/SeedButton";
-import { listBounties } from "@/lib/db";
+import { getBounty, insertBounty, listBounties } from "@/lib/db";
+import { demoBounties } from "@/lib/demo";
 import { formatMoney } from "@/lib/format";
 import { paypalMode } from "@/lib/paypal";
 
 export const dynamic = "force-dynamic";
 
+async function loadBounties() {
+  let bounties = await listBounties();
+  if (bounties.length === 0 && process.env.AUTO_SEED !== "false") {
+    for (const bounty of demoBounties()) {
+      if (!(await getBounty(bounty.id))) await insertBounty(bounty);
+    }
+    bounties = await listBounties();
+  }
+  return bounties;
+}
+
 export default async function HomePage() {
-  const bounties = await listBounties();
+  const bounties = await loadBounties();
   const mode = paypalMode();
 
   const locked = bounties
