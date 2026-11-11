@@ -1,6 +1,7 @@
 import { constants, promises as fs } from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { demoBounties } from "./demo";
 import type { Bounty } from "./types";
 
 interface DB {
@@ -62,13 +63,32 @@ async function withLock<T>(fn: () => Promise<T>): Promise<T> {
   return run;
 }
 
+/**
+ * Serverless hosts give each instance its own /tmp. Seed the demo set on first
+ * touch so the hosted demo is populated on any instance, not just the one that
+ * served the home page.
+ */
+async function seedIfEmpty(db: DB): Promise<void> {
+  if (process.env.AUTO_SEED === "false" || db.bounties.length > 0) return;
+  for (const bounty of demoBounties()) {
+    if (!db.bounties.some((b) => b.id === bounty.id)) db.bounties.push(bounty);
+  }
+  try {
+    await persist();
+  } catch {
+    // Read-only host: keep the seeded set in memory for this instance.
+  }
+}
+
 export async function listBounties(): Promise<Bounty[]> {
   await load();
+  await seedIfEmpty(cache!);
   return clone(cache!.bounties).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 }
 
 export async function getBounty(id: string): Promise<Bounty | null> {
   await load();
+  await seedIfEmpty(cache!);
   const found = cache!.bounties.find((b) => b.id === id);
   return found ? clone(found) : null;
 }
