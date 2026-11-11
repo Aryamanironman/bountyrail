@@ -1,0 +1,12 @@
+{
+  "title": "SplitSense: one payment, split correctly",
+  "theme": "studio",
+  "size": "16:9",
+  "voice": "af_heart",
+  "music": {
+    "volume": 0.35
+  },
+  "captions": "auto",
+  "watermark": false,
+  "defaults": "0.6"
+}

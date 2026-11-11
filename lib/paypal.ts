@@ -175,12 +175,13 @@ export async function authorizeEscrow(orderId: string): Promise<AuthorizationRes
     const existing = order.purchase_units?.[0]?.payments?.authorizations?.[0];
     if (existing) return { authorizationId: existing.id, status: existing.status };
   }
-  const captured = await paypalFetch<OrderResponse>(`/v2/checkout/orders/${orderId}/capture`, {
+  const authorized = await paypalFetch<OrderResponse>(`/v2/checkout/orders/${orderId}/authorize`, {
     method: "POST",
+    body: JSON.stringify({}),
   });
-  const authorization = captured.purchase_units?.[0]?.payments?.authorizations?.[0];
+  const authorization = authorized.purchase_units?.[0]?.payments?.authorizations?.[0];
   if (!authorization) {
-    throw new PayPalError("PayPal did not return an authorization for this order", 502, undefined, captured);
+    throw new PayPalError("PayPal did not return an authorization for this order", 502, undefined, authorized);
   }
   return { authorizationId: authorization.id, status: authorization.status };
 }

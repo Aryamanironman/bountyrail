@@ -1,0 +1,10 @@
+{
+  "title": "BountyRail: bounties that pay themselves",
+  "theme": "studio",
+  "size": "16:9",
+  "voice": "af_heart",
+  "music": true,
+  "captions": "auto",
+  "watermark": false,
+  "defaults": "0.6"
+}
