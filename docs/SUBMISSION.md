@@ -2,8 +2,8 @@
 
 **Tagline:** Bounties that pay themselves.
 
-**Repo:** [ADD PUBLIC REPO URL]
-**Demo:** [ADD HOSTED URL]
+**Repo:** https://github.com/Aryamanironman/bountyrail
+**Demo:** https://bountyrail.vercel.app
 **Video:** [ADD YOUTUBE URL]
 
 ---
@@ -90,10 +90,10 @@ a simulation.
 ## Built with
 
 `paypal-orders-v2` · `paypal-payouts` · `paypal-sandbox` · `nextjs` · `react` · `typescript` ·
-`anthropic-claude` · `github-webhooks` · `vitest`
+`groq` · `gpt-oss-120b` · `github-webhooks` · `vitest`
 
 ## AI tools used
 
-- **Anthropic Claude** (default `claude-sonnet-5-5`, configurable) as the bounty review judge.
+- **Groq** running **`openai/gpt-oss-120b`** as the bounty review judge in the live demo. The endpoint is configurable, and the code defaults to an Anthropic-compatible one.
 - **Claude Code** for implementation, tests and documentation.
 - A labelled deterministic fallback runs when no model key is configured.

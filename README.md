@@ -8,6 +8,10 @@ criteria, and releases a PayPal payout when a maintainer confirms.
 
 Built for the [PayPal AI Hackathon](https://paypalaihackathon.devpost.com/).
 
+**Live demo:** [bountyrail.vercel.app](https://bountyrail.vercel.app) · **Repo:** [github.com/Aryamanironman/bountyrail](https://github.com/Aryamanironman/bountyrail)
+
+> The hosted demo runs with the PayPal sandbox and Groq (`openai/gpt-oss-120b`). Vercel's filesystem is ephemeral, so after a cold start click **Load demo bounties** on the home page.
+
 ![BountyRail home](docs/screenshots/home.png)
 
 ## Why this is different
